@@ -4,4 +4,4 @@ from django.shortcuts import render
 # Create your views here.
 def index(request):
     """The home page for Learning Log"""
-    return render(request, 'lab_journals/index.html')
+    return render(request, 'index.html')

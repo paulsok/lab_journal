@@ -1,5 +1,5 @@
 from django.contrib import admin
-from learning_logs.models import Topic, Entry
+from lab_journals.models import Topic, Entry
 
 
 admin.site.register(Topic)

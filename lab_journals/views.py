@@ -1,13 +1,15 @@
-from django.shortcuts import render
-from .models import Topic
-from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
+from .forms import TopicForm, EntryForm
+from django.shortcuts import render
+from django.urls import reverse
+from .models import Topic, Entry
 
 
-# Create your views here.
 def index(request):
     """The home page for Learning Log"""
-    return render(request, 'index.html')
+    return render(request, 'lab_journals/index.html')
 
 
 def topics(request):
@@ -46,3 +48,40 @@ def new_topic(request):
     context = {'form': form}
     return render(request, 'lab_journals/new_topic.html', context)
 
+
+def new_entry(request, topic_id):
+    """Add a new entry for a particular topic"""
+    topic = Topic.objects.get(id=topic_id)
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = EntryForm()
+    else:
+        # POST data submitted; process data.
+        form = EntryForm(data=request.POST)
+        if form.is_valid():
+            new_entry = form.save(commit=False)
+            new_entry.topic = topic
+            new_entry.save()
+            return HttpResponseRedirect(reverse('topic', args=[topic_id]))
+    context = {'topic': topic, 'form': form}
+    return render(request, 'lab_journals/new_entry.html', context)
+
+
+def edit_entry(request, entry_id):
+    """Edit an existing entry"""
+    entry = Entry.objects.get(id=entry_id)
+    topic = entry.topic
+    if topic.owner != request.user:
+        raise Http404
+
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current entry.
+        form = EntryForm(instance=entry)
+    else:
+        # POST data submitted; process data.
+        form = EntryForm(instance=entry, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('topic', args=[topic.id]))
+    context = {'entry': entry, 'topic': topic, 'form': form}
+    return render(request, 'lab_journals/edit_entry.html', context)

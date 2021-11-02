@@ -9,16 +9,17 @@ from .models import Topic, Entry
 
 def index(request):
     """The home page for Learning Log"""
-    return render(request, 'lab_journals/index.html')
+    return render(request, 'index.html')
 
-
+@login_required
 def topics(request):
     """Show all topics"""
     topics = Topic.objects.filter(owner=request.user).order_by('date_added')
     context = {'topics': topics}
-    return render(request, 'lab_journals/topics.html', context)
+    return render(request, 'topics.html', context)
 
 
+@login_required
 def topic(request, topic_id):
     """Show a single topic and all its entries"""
     topic = Topic.objects.get(id=topic_id)
@@ -29,9 +30,10 @@ def topic(request, topic_id):
 
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
-    return render(request, 'lab_journals/topic.html', context)
+    return render(request, 'topic.html', context)
 
 
+@login_required
 def new_topic(request):
     """Add a new topic"""
     if request.method != 'POST':
@@ -46,9 +48,10 @@ def new_topic(request):
             new_topic.save()
             return HttpResponseRedirect(reverse('topics'))
     context = {'form': form}
-    return render(request, 'lab_journals/new_topic.html', context)
+    return render(request, 'new_topic.html', context)
 
 
+@login_required
 def new_entry(request, topic_id):
     """Add a new entry for a particular topic"""
     topic = Topic.objects.get(id=topic_id)
@@ -64,9 +67,10 @@ def new_entry(request, topic_id):
             new_entry.save()
             return HttpResponseRedirect(reverse('topic', args=[topic_id]))
     context = {'topic': topic, 'form': form}
-    return render(request, 'lab_journals/new_entry.html', context)
+    return render(request, 'new_entry.html', context)
 
 
+@login_required
 def edit_entry(request, entry_id):
     """Edit an existing entry"""
     entry = Entry.objects.get(id=entry_id)
@@ -84,4 +88,4 @@ def edit_entry(request, entry_id):
             form.save()
             return HttpResponseRedirect(reverse('topic', args=[topic.id]))
     context = {'entry': entry, 'topic': topic, 'form': form}
-    return render(request, 'lab_journals/edit_entry.html', context)
+    return render(request, 'edit_entry.html', context)

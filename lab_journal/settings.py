@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'lab_journals',
     'users',
+    'bootstrap3',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +82,12 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# Settings for django-bootstrap3
+BOOTSTRAP3 = {
+    'include_jquery': True,
+    }
 
 
 # Password validation

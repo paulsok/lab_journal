@@ -1,4 +1,15 @@
 {% extends "base.html" %}
+{% block header %}
+<div class='jumbotron'>
+    <h1>Track your experimental results!</h1>
+</div>
+{% endblock header %}
+
 {% block content %}
-    <p>Lab Joural helps you keep track of your notes, for any topic you want.</p>
+    <h2>
+        <a href="{% url 'register' %}">Register an account</a> to make your own Lab Journal.
+    </h2>
+    <h2>
+       Lab Joural helps you keep track of your experiments.
+    </h2>
 {% endblock content %}

@@ -8,7 +8,7 @@ from .models import Topic, Entry
 
 
 def index(request):
-    """The home page for Learning Log"""
+    """The home page for Lab Journal"""
     return render(request, 'index.html')
 
 @login_required

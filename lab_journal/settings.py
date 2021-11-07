@@ -20,6 +20,7 @@ STATIC_URL = 'lab_journal/static'
 
 # Allow only Heroku to host the project.
 ALLOWED_HOSTS = ['lab-journal.herokuapp.com']
+# ALLOWED_HOSTS = ['localhost']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -29,9 +30,6 @@ SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -62,7 +60,7 @@ ROOT_URLCONF = 'lab_journal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'lab_journal/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -18,6 +18,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = 'lab_journal/static'
 
+# Allow only Heroku to host the project.
+ALLOWED_HOSTS = ['lab-journal.herokuapp.com']
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -25,7 +28,7 @@ STATIC_URL = 'lab_journal/static'
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 

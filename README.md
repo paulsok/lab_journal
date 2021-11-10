@@ -1,4 +1,7 @@
 # lab_journal
+A simple project using the Django framework to keep a lab log.
+All notes are organized by topics in which users can add their notes. The time when the note was written is indicated.
+Each user has access only to his topics and notes.
 
 ## Setup
 The first thing to do is to clone the repository:
